@@ -23,6 +23,7 @@ namespace SanityArchiver.DesktopUI.ViewModels
             DirManagerService = new DirManagerService();
             Drives = new ObservableCollection<DirManagerModel>(DirManagerService.GetAllDrives());
             CurrentFiles = new ObservableCollection<FileInfo>(Drives[0].DirInf.GetFiles());
+            SelectedItems = new ObservableCollection<FileInfo>();
         }
 
         /// <summary>
@@ -34,6 +35,11 @@ namespace SanityArchiver.DesktopUI.ViewModels
         /// Gets CurrentFiles
         /// </summary>
         public ObservableCollection<FileInfo> CurrentFiles { get; private set; }
+
+        /// <summary>
+        /// Gets files selected
+        /// </summary>
+        public ObservableCollection<FileInfo> SelectedItems { get; private set; }
 
         private DirManagerService DirManagerService { get; set; }
 
