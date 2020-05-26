@@ -21,7 +21,7 @@
                     </HierarchicalDataTemplate>
                 </TreeView.ItemTemplate>
             </TreeView>
-            <DataGrid ItemsSource="{Binding CurrentFiles}"  AutoGenerateColumns="False">
+            <DataGrid ItemsSource="{Binding CurrentFiles}"  AutoGenerateColumns="False" x:Name="DtgFiles">
                 <DataGrid.Columns>
                     <DataGridTemplateColumn>
                         <DataGridTemplateColumn.CellTemplate>
