@@ -1,7 +1,10 @@
+﻿using System.Windows;
+using System.IO;
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Windows;
+
 using System.Windows.Controls;
 using System.Windows.Media;
 using SanityArchiver.DesktopUI.ViewModels;
@@ -42,6 +45,22 @@ namespace SanityArchiver.DesktopUI.Views
                 MainWindowVM.DisplayCurrentFiles((DirManagerModel)((TreeViewItem)depObj).Header);
             }
         }
+        private void Select(object sender, RoutedEventArgs e)
+        {
+            var depObj = (DependencyObject)e.OriginalSource;
+            while ((depObj != null) && !(depObj.GetType().Name is "DataGridRow"))
+            {
+                depObj = VisualTreeHelper.GetParent(depObj);
+            }
+
+            if (((CheckBox)((DependencyObject)e.OriginalSource)).IsChecked == true)
+            {
+                MainWindowVM.SelectedItems.Add((FileInfo)((DataGridRow)depObj).Item);
+            }
+            else
+            {
+                MainWindowVM.SelectedItems.Remove((FileInfo)((DataGridRow)depObj).Item);
+            }
 
         private void ZipSelectedButtonClick(object sender, RoutedEventArgs e)
         {

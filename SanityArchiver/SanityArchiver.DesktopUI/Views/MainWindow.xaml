@@ -27,6 +27,7 @@
                 <DataGridTemplateColumn>
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
+                            <CheckBox Click="Select"/>
                             <CheckBox />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
