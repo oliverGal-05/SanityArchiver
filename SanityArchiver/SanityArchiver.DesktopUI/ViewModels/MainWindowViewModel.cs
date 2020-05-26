@@ -60,12 +60,18 @@ namespace SanityArchiver.DesktopUI.ViewModels
         /// Copy selected files
         /// </summary>
         /// <param name="filesToCopy">selected items</param>
-        public void CopyFiles(ObservableCollection<FileInfo> filesToCopy)
+        /// <param name="path">the path to copy to</param>
+        public void CopyFiles(ObservableCollection<FileInfo> filesToCopy, string path)
         {
-            string toPath = @"C:\Users\Olic";
+            string toPathOrig = path;
             foreach (var item in filesToCopy)
             {
-                item.CopyTo(toPath);
+                string name = item.Name;
+
+                // string ext = item.Extension;
+
+                string toDestinPath = toPathOrig + name;
+                item.CopyTo(toDestinPath);
             }
         }
     }
