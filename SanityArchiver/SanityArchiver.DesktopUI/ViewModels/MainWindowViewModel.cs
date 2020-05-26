@@ -23,6 +23,7 @@ namespace SanityArchiver.DesktopUI.ViewModels
             DirManagerService = new DirManagerService();
             Drives = new ObservableCollection<DirManagerModel>(DirManagerService.GetAllDrives());
             CurrentFiles = new ObservableCollection<FileInfo>(Drives[0].DirInf.GetFiles());
+            SelectedItems = new ObservableCollection<FileInfo>();
         }
 
         /// <summary>
@@ -34,6 +35,11 @@ namespace SanityArchiver.DesktopUI.ViewModels
         /// Gets CurrentFiles
         /// </summary>
         public ObservableCollection<FileInfo> CurrentFiles { get; private set; }
+
+        /// <summary>
+        /// Gets files selected
+        /// </summary>
+        public ObservableCollection<FileInfo> SelectedItems { get; private set; }
 
         private DirManagerService DirManagerService { get; set; }
 
@@ -47,6 +53,19 @@ namespace SanityArchiver.DesktopUI.ViewModels
             foreach (var item in currentDirModel.DirInf.GetFiles())
             {
                 CurrentFiles.Add(item);
+            }
+        }
+
+        /// <summary>
+        /// Copy selected files
+        /// </summary>
+        /// <param name="filesToCopy">selected items</param>
+        public void CopyFiles(ObservableCollection<FileInfo> filesToCopy)
+        {
+            string toPath = @"C:\Users\Olic";
+            foreach (var item in filesToCopy)
+            {
+                item.CopyTo(toPath);
             }
         }
     }

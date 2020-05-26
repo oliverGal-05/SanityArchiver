@@ -19,7 +19,7 @@
                 <DataGridTemplateColumn>
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <CheckBox/>
+                            <CheckBox  Click="CheckBox_Click"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
@@ -27,6 +27,13 @@
                 <DataGridTextColumn Header="Date of Creation" Binding="{Binding CreationTime}" IsReadOnly="True"/>
                 <DataGridTextColumn Header="File Size" Binding="{Binding Length}" IsReadOnly="True"/>
             </DataGrid.Columns>
+            <DataGrid.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Copy file(s)" Click="Copy_Clicked"/>
+                    <MenuItem Header="Move file(s)"/>
+                    <MenuItem Header="Delete file(s)"/>
+                </ContextMenu>
+            </DataGrid.ContextMenu>
         </DataGrid>
     </DockPanel>
 </Window>
