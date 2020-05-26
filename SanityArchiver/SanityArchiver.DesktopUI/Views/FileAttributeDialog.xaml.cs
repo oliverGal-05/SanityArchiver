@@ -16,7 +16,7 @@ namespace SanityArchiver.DesktopUI.Views
         {
             InitializeComponent();
             FileAttributeViewModel vm = new FileAttributeViewModel(path);
-            DataContext = vm.FilteredFile;
+            DataContext = vm;
         }
 
         private void Cancel_Click(object sender, RoutedEventArgs e)

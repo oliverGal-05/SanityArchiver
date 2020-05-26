@@ -8,12 +8,12 @@
         Title="FileAttributeDialog" Height="316.552" Width="492.862">
 
     <Grid>
-        <Button Content="Save" HorizontalAlignment="Left" Height="41" Margin="70,196,0,0" VerticalAlignment="Top" Width="137"/>
+        <Button Content="Save" Command="{Binding Path=SaveButton}" CommandParameter="{Binding ElementName=txbExtension, Path=Text}" HorizontalAlignment="Left" Height="41" Margin="70,196,0,0" VerticalAlignment="Top" Width="137"/>
         <Button Content="Cancel" Click="Cancel_Click" HorizontalAlignment="Left" Margin="275,196,0,0" VerticalAlignment="Top" Width="137" Height="41"/>
         <Label Content="Filename" HorizontalAlignment="Left" Height="31" Margin="45,50,0,0" VerticalAlignment="Top" Width="71"/>
         <Label Content="Extension" HorizontalAlignment="Left" Margin="45,81,0,0" VerticalAlignment="Top" Width="71"/>
-        <TextBox HorizontalAlignment="Left" Height="26" Margin="124,54,0,0" TextWrapping="Wrap" Text="{Binding Path=Name, Mode=OneWay}" VerticalAlignment="Top" Width="321"/>
-        <TextBox HorizontalAlignment="Left" Height="26" Margin="124,85,0,0" TextWrapping="Wrap" Text="{Binding Path=Extension, Mode=OneWay}" VerticalAlignment="Top" Width="321"/>
-        <CheckBox Content="Hidden" HorizontalAlignment="Left" Margin="124,131,0,0" VerticalAlignment="Top" IsChecked="{Binding Path=Hidden, Mode=OneWay}"/>
+        <TextBox HorizontalAlignment="Left" Height="26" Margin="121,50,0,0" TextWrapping="Wrap" Text="{Binding Path=FilteredFile.Name}" VerticalAlignment="Top" Width="321"/>
+        <TextBox Name="txbExtension" HorizontalAlignment="Left" Height="26" Margin="121,81,0,0" TextWrapping="Wrap" Text="{Binding Path=FilteredFile.Extension}" VerticalAlignment="Top" Width="321"/>
+        <CheckBox Content="Hidden" HorizontalAlignment="Left" Margin="124,131,0,0" VerticalAlignment="Top" IsChecked="{Binding Path=FilteredFile.Hidden}"/>
     </Grid>
 </Window>
