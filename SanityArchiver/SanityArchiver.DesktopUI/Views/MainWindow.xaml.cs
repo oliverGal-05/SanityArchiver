@@ -61,7 +61,7 @@ namespace SanityArchiver.DesktopUI.Views
 
         private void Copy_Clicked(object sender, RoutedEventArgs e)
         {
-            MainWindowVM.CopyFiles(MainWindowVM.SelectedItems, @"C:\Users\Olic");
+            MainWindowVM.CopyFiles(MainWindowVM.SelectedItems, @"C:\Users\Olic\");
         }
     }
 }

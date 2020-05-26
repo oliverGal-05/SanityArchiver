@@ -67,12 +67,11 @@ namespace SanityArchiver.DesktopUI.ViewModels
             foreach (var item in filesToCopy)
             {
                 string name = item.Name;
-
-                // string ext = item.Extension;
-
                 string toDestinPath = toPathOrig + name;
                 item.CopyTo(toDestinPath);
             }
+
+            filesToCopy.Clear();
         }
     }
 }
