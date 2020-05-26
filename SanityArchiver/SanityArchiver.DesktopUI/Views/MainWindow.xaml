@@ -10,9 +10,15 @@
         <TreeView x:Name="TreeView" ItemsSource="{Binding Drives}">
             <TreeView.ItemTemplate >
                 <HierarchicalDataTemplate ItemsSource="{Binding Directories}">
-                    <TextBlock Text="{Binding Name}"  Margin="0,0,5,0" PreviewMouseLeftButtonUp="TreeView_PreviewMouseLeftButtonUp"/>
+                    <TextBlock Text="{Binding Name}"  Margin="0,0,5,0" PreviewMouseLeftButtonUp="TreeView_PreviewMouseLeftButtonUp"
+                               PreviewMouseRightButtonUp="TextBlock_PreviewMouseRightButtonUp"/>
                 </HierarchicalDataTemplate>
             </TreeView.ItemTemplate>
+            <TreeView.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Paste" Click="PasteFiles"/>
+                </ContextMenu>
+            </TreeView.ContextMenu>
         </TreeView>
         <DataGrid ItemsSource="{Binding CurrentFiles}"  AutoGenerateColumns="False">
             <DataGrid.Columns>
