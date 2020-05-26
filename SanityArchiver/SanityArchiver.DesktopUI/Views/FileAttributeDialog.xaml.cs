@@ -17,6 +17,10 @@ namespace SanityArchiver.DesktopUI.Views
             InitializeComponent();
             FileAttributeViewModel vm = new FileAttributeViewModel(path);
             DataContext = vm;
+            if (vm.CloseAction == null)
+            {
+                vm.CloseAction = new System.Action(Close);
+            }
         }
 
         private void Cancel_Click(object sender, RoutedEventArgs e)

@@ -14,6 +14,7 @@ namespace SanityArchiver.DesktopUI.ViewModels
         private ICommand _saveButton;
         private MyFile _filteredfile;
         private FileInfo _file;
+        private Action _closeaction;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="FileAttributeViewModel"/> class.
@@ -45,6 +46,22 @@ namespace SanityArchiver.DesktopUI.ViewModels
         }
 
         /// <summary>
+        /// Gets or Sets CloseAction.
+        /// </summary>
+        public Action CloseAction
+        {
+            get
+            {
+                return _closeaction;
+            }
+
+            set
+            {
+                _closeaction = value;
+            }
+        }
+
+        /// <summary>
         /// Gets or Sets FilteredFile.
         /// </summary>
         public MyFile FilteredFile
@@ -71,7 +88,7 @@ namespace SanityArchiver.DesktopUI.ViewModels
             {
                 if (_saveButton == null)
                 {
-                    _saveButton = new SaveCommand(ref _filteredfile, ref _file);
+                    _saveButton = new SaveCommand(ref _filteredfile, ref _file, ref _closeaction);
                 }
 
                 return _saveButton;
@@ -147,16 +164,19 @@ namespace SanityArchiver.DesktopUI.ViewModels
         {
             private FileInfo _originalFile;
             private MyFile _myfile;
+            private Action _closeaction;
 
             /// <summary>
             /// Initializes a new instance of the <see cref="SaveCommand"/> class.
             /// </summary>
             /// <param name="file">Reference of the file storing class.</param>
             /// <param name="originalfile">FileInfo reference.</param>
-            public SaveCommand(ref MyFile file, ref FileInfo originalfile)
+            /// <param name="closeaction">Delegate a method.</param>
+            public SaveCommand(ref MyFile file, ref FileInfo originalfile, ref Action closeaction)
             {
                 _myfile = file;
                 _originalFile = originalfile;
+                _closeaction = closeaction;
             }
 
             /// <inheritdoc/>
@@ -182,6 +202,7 @@ namespace SanityArchiver.DesktopUI.ViewModels
             {
                 string updatedPath = RenameFile();
                 SetOrRemoveHiddenAttribute(updatedPath);
+                _closeaction();
             }
 
             private string RenameFile()
