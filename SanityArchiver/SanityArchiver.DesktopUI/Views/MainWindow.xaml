@@ -8,26 +8,32 @@
         Title="Sanity Archiver" Height="450" Width="800">
 
     <DockPanel>
-        <DockPanel DockPanel.Dock="Top">
+        <DockPanel DockPanel.Dock="Top" Height="22">
             <Button Grid.ColumnSpan="2" Content="Encrypt" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" />
             <Button Content="Decrypt" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" />
             <Button Grid.ColumnSpan="2" Content="Zip selected" HorizontalAlignment="Left" VerticalAlignment="Top"
                     Width="75" Click="ZipSelectedButtonClick"  />
+            <Button Content="Search" DockPanel.Dock="Right" HorizontalAlignment="Right" Width="55" Height="20" VerticalAlignment="Top"/>
+            <TextBox Text="search input" DockPanel.Dock="Right" HorizontalAlignment="Right" Width="150" Height="20" VerticalAlignment="Top"/>
         </DockPanel>
+        <DockPanel DockPanel.Dock="Top" Height="24">
+            <Label Content="Search result" DockPanel.Dock="Right" HorizontalAlignment="Right" Width="221"/>
+        </DockPanel>
+
         <TreeView x:Name="TreeView" ItemsSource="{Binding Drives}">
-                <TreeView.ItemTemplate >
-                    <HierarchicalDataTemplate ItemsSource="{Binding Directories}">
-                        <TextBlock Text="{Binding Name}"  Margin="0,0,5,0" PreviewMouseLeftButtonUp="TreeView_PreviewMouseLeftButtonUp"/>
-                    </HierarchicalDataTemplate>
-                </TreeView.ItemTemplate>
+            <TreeView.ItemTemplate >
+                <HierarchicalDataTemplate ItemsSource="{Binding Directories}">
+                    <TextBlock Text="{Binding Name}"  Margin="0,0,5,0" PreviewMouseLeftButtonUp="TreeView_PreviewMouseLeftButtonUp"/>
+                </HierarchicalDataTemplate>
+            </TreeView.ItemTemplate>
         </TreeView>
-        <DataGrid ItemsSource="{Binding CurrentFiles}" SelectedItem="{Binding Path=CurrentFiles, Mode=OneWay}" AutoGenerateColumns="False" x:Name="DtgFiles">
-        <DataGrid.Resources>
-            <Style TargetType="DataGrid">
-                <EventSetter Event="MouseDoubleClick" Handler="Row_DoubleClick"/>
-            </Style>
-        </DataGrid.Resources>
-        <DataGrid.Columns>
+        <DataGrid ItemsSource="{Binding CurrentFiles}" SelectedItem="{Binding Path=CurrentFiles, Mode=OneWay}" AutoGenerateColumns="False" x:Name="DtgFiles" Height="368" VerticalAlignment="Bottom">
+            <DataGrid.Resources>
+                <Style TargetType="DataGrid">
+                    <EventSetter Event="MouseDoubleClick" Handler="Row_DoubleClick"/>
+                </Style>
+            </DataGrid.Resources>
+            <DataGrid.Columns>
                 <DataGridTemplateColumn>
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
