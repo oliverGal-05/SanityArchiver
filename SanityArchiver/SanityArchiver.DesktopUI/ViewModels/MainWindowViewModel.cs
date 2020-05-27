@@ -27,6 +27,16 @@ namespace SanityArchiver.DesktopUI.ViewModels
         }
 
         /// <summary>
+        /// Gets or sets the path
+        /// </summary>
+        public string Path { get; set; }
+
+        /// <summary>
+        /// Gets or sets selected action
+        /// </summary>
+        public string Copy_Move { get; set; }
+
+        /// <summary>
         /// Gets DirInfo of Drives
         /// </summary>
         public ObservableCollection<DirManagerModel> Drives { get; private set; }
@@ -60,17 +70,24 @@ namespace SanityArchiver.DesktopUI.ViewModels
         /// Copy selected files
         /// </summary>
         /// <param name="filesToCopy">selected items</param>
-        /// <param name="path">the path to copy to</param>
-        public void CopyFiles(ObservableCollection<FileInfo> filesToCopy, string path)
+        public void CopyFiles(ObservableCollection<FileInfo> filesToCopy)
         {
-            string toPathOrig = path + @"\";
+            string toPathOrig = Path + @"\";
             foreach (var item in filesToCopy)
             {
                 string name = item.Name;
                 string toDestinPath = toPathOrig + name;
-                item.CopyTo(toDestinPath);
+                if (Copy_Move == "Copy")
+                {
+                    item.CopyTo(toDestinPath);
+                }
+                else if (Copy_Move == "Move")
+                {
+                    item.MoveTo(toDestinPath);
+                }
             }
 
+            Copy_Move = string.Empty;
             filesToCopy.Clear();
         }
     }

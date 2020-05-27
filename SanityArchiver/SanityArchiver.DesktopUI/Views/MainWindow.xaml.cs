@@ -14,16 +14,6 @@ namespace SanityArchiver.DesktopUI.Views
     public partial class MainWindow : Window
     {
         /// <summary>
-        /// save the clicked path for copy
-        /// </summary>
-        private string _pathToCopy;
-
-        /// <summary>
-        /// copy selected or not
-        /// </summary>
-        private bool _copyStatus;
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="MainWindow"/> class.
         /// </summary>
         public MainWindow()
@@ -72,7 +62,12 @@ namespace SanityArchiver.DesktopUI.Views
 
         private void Copy_Clicked(object sender, RoutedEventArgs e)
         {
-            _copyStatus = true;
+            MainWindowVM.Copy_Move = "Copy";
+        }
+
+        private void Move_Clicked(object sender, RoutedEventArgs e)
+        {
+            MainWindowVM.Copy_Move = "Move";
         }
 
         private void TextBlock_PreviewMouseRightButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
@@ -83,16 +78,12 @@ namespace SanityArchiver.DesktopUI.Views
                 depObj = VisualTreeHelper.GetParent(depObj);
             }
 
-            _pathToCopy = ((DirManagerModel)((TreeViewItem)depObj).Header).FullName;
+            MainWindowVM.Path = ((DirManagerModel)((TreeViewItem)depObj).Header).FullName;
         }
 
         private void PasteFiles(object sender, RoutedEventArgs e)
         {
-            if (_copyStatus == true)
-            {
-                MainWindowVM.CopyFiles(MainWindowVM.SelectedItems, _pathToCopy);
-                _copyStatus = false;
-            }
+            MainWindowVM.CopyFiles(MainWindowVM.SelectedItems);
         }
     }
 }

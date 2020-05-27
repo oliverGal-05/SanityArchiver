@@ -36,8 +36,7 @@
             <DataGrid.ContextMenu>
                 <ContextMenu>
                     <MenuItem Header="Copy file(s)" Click="Copy_Clicked"/>
-                    <MenuItem Header="Move file(s)"/>
-                    <MenuItem Header="Delete file(s)"/>
+                    <MenuItem Header="Move file(s)" Click="Move_Clicked"/>
                 </ContextMenu>
             </DataGrid.ContextMenu>
         </DataGrid>
