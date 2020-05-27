@@ -75,6 +75,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="ViewModels\FileAttributeViewModel.cs" />
+    <Compile Include="ViewModels\RelayCommand.cs" />
     <Compile Include="Views\FileAttributeDialog.xaml.cs">
       <DependentUpon>FileAttributeDialog.xaml</DependentUpon>
     </Compile>

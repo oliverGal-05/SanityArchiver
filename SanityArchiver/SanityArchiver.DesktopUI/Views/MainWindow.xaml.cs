@@ -78,5 +78,19 @@ namespace SanityArchiver.DesktopUI.Views
             var attrDialog = new FileAttributeDialog(selectedFile.FullName);
             attrDialog.Show();
         }
+
+        private void OnKeyDownHandler(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Return)
+            {
+                var param = e.Source as TextBox;
+
+                ICommand cmd = MainWindowVM.SearchCommand;
+                if (cmd.CanExecute(param.Text))
+                {
+                    cmd.Execute(param.Text);
+                }
+            }
+        }
     }
 }

@@ -13,11 +13,13 @@
             <Button Content="Decrypt" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" />
             <Button Grid.ColumnSpan="2" Content="Zip selected" HorizontalAlignment="Left" VerticalAlignment="Top"
                     Width="75" Click="ZipSelectedButtonClick"  />
-            <Button Content="Search" DockPanel.Dock="Right" HorizontalAlignment="Right" Width="55" Height="20" VerticalAlignment="Top"/>
-            <TextBox Text="search input" DockPanel.Dock="Right" HorizontalAlignment="Right" Width="150" Height="20" VerticalAlignment="Top"/>
+            <Button Content="Search" Command="{Binding Path=SearchCommand}"
+                    CommandParameter="{Binding ElementName=txbUserInput, Path=Text}" 
+                    DockPanel.Dock="Right" HorizontalAlignment="Right" Width="55" Height="20" VerticalAlignment="Top"/>
+            <TextBox Name="txbUserInput" KeyDown="OnKeyDownHandler" DockPanel.Dock="Right" TextAlignment="Right" HorizontalAlignment="Right" Width="150" Height="20" VerticalAlignment="Top"/>
         </DockPanel>
         <DockPanel DockPanel.Dock="Top" Height="24">
-            <Label Content="Search result" DockPanel.Dock="Right" HorizontalAlignment="Right" Width="221"/>
+            <Label Name="lblSearchres" Content="{Binding Path=SearchResult}" DockPanel.Dock="Right" HorizontalAlignment="Right" Width="296" FontStyle="Italic"/>
         </DockPanel>
 
         <TreeView x:Name="TreeView" ItemsSource="{Binding Drives}">
