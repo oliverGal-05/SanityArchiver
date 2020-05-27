@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -54,6 +55,30 @@ namespace SanityArchiver.DesktopUI.ViewModels
             {
                 CurrentFiles.Add(item);
             }
+        }
+
+        /// <summary>
+        /// Compresses the selected files
+        /// </summary>
+        /// <param name="selectedItemDir">Directory of the selected items</param>
+        /// <param name="selectedItems">List of the selected items</param>
+        /// <param name="exampleItem">The first element of the selected items</param>
+        public void ZipFiles(string selectedItemDir, ObservableCollection<FileInfo> selectedItems, FileInfo exampleItem)
+        {
+            System.IO.Directory.CreateDirectory(selectedItemDir + "/temp");
+
+            for (int i = 0; i < selectedItems.Count; i += 1)
+            {
+                var selectedItem = selectedItems[i];
+                File.Copy(selectedItem.FullName, selectedItemDir + "/temp/" + selectedItem.Name, true);
+                File.Delete(selectedItem.Name);
+            }
+
+            string startPath = selectedItemDir + "/temp";
+            string zipPath = selectedItemDir + "/" + exampleItem.Name + ".zip";
+            ZipFile.CreateFromDirectory(startPath, zipPath);
+
+            System.IO.Directory.Delete(startPath, true);
         }
     }
 }
