@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using SanityArchiver.Application.Models;
@@ -45,6 +46,27 @@ namespace SanityArchiver.DesktopUI.ViewModels
         private DirManagerService DirManagerService { get; set; }
 
         /// <summary>
+        /// Encrypts the selected item
+        /// </summary>
+        /// <param name="selectedItemFulName">The full path of the item to be encrypted</param>
+        /// <param name="destination">The full path of the destination of the encryption</param>
+        public static void EncryptTxt(string selectedItemFulName, string destination)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Decrypts an .enc file
+        /// </summary>
+        /// <param name="selectedItemDir">a</param>
+        /// <param name="selectedItemFullName">b</param>
+        /// <exception cref="NotImplementedException">c</exception>
+        public static void Decrypt(string selectedItemDir, string selectedItemFullName)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
         /// Refresh to current files
         /// </summary>
         /// <param name="currentDirModel">currentDir</param>
@@ -65,7 +87,7 @@ namespace SanityArchiver.DesktopUI.ViewModels
         /// <param name="exampleItem">The first element of the selected items</param>
         public void ZipFiles(string selectedItemDir, ObservableCollection<FileInfo> selectedItems, FileInfo exampleItem)
         {
-            System.IO.Directory.CreateDirectory(selectedItemDir + "/temp");
+            Directory.CreateDirectory(selectedItemDir + "/temp");
 
             for (int i = 0; i < selectedItems.Count; i += 1)
             {
@@ -78,7 +100,7 @@ namespace SanityArchiver.DesktopUI.ViewModels
             string zipPath = selectedItemDir + "/" + exampleItem.Name + ".zip";
             ZipFile.CreateFromDirectory(startPath, zipPath);
 
-            System.IO.Directory.Delete(startPath, true);
+            Directory.Delete(startPath, true);
         }
     }
 }

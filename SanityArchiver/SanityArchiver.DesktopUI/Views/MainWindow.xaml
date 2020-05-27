@@ -9,8 +9,8 @@
 
     <DockPanel>
         <DockPanel DockPanel.Dock="Top">
-            <Button Grid.ColumnSpan="2" Content="Encrypt" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" />
-            <Button Content="Decrypt" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" />
+            <Button Grid.ColumnSpan="2" Content="Encrypt" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Click="EncryptSelectedButtonClick" />
+            <Button Content="Decrypt" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Click="DecryptSelectedButtonClick" />
             <Button Grid.ColumnSpan="2" Content="Zip selected" HorizontalAlignment="Left" VerticalAlignment="Top"
                     Width="75" Click="ZipSelectedButtonClick"  />
         </DockPanel>
