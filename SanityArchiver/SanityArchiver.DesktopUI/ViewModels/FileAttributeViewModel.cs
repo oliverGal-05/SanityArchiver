@@ -202,7 +202,10 @@ namespace SanityArchiver.DesktopUI.ViewModels
             {
                 string updatedPath = RenameFile();
                 SetOrRemoveHiddenAttribute(updatedPath);
-                _closeaction();
+                if (updatedPath != null)
+                {
+                    _closeaction();
+                }
             }
 
             private string RenameFile()
