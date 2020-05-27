@@ -1,8 +1,7 @@
 ﻿using System.Windows;
 using System.IO;
-﻿using System;
+using System;
 using System.Collections.Generic;
-
 using System.Windows.Controls;
 using System.Windows.Media;
 using SanityArchiver.DesktopUI.ViewModels;
@@ -63,12 +62,12 @@ namespace SanityArchiver.DesktopUI.Views
         }
 
         private void ZipSelectedButtonClick(object sender, RoutedEventArgs e)
-            {
-                var selectedItems = DtgFiles.SelectedCells;
-                var exampleItem = selectedItems[0].Item;
-                var selectedItemDir = Path.GetDirectoryName(exampleItem.ToString());
+        {
+            var selectedItems = MainWindowVM.SelectedItems;
+            var exampleItem = selectedItems[0];
+            var selectedItemDir = Path.GetDirectoryName(exampleItem.FullName);
 
-                ///  ZipFiles(selectedItemDir, selectedItems, exampleItem);
-            }
+            ZipFiles(selectedItemDir, selectedItems, exampleItem);
         }
     }
+}
