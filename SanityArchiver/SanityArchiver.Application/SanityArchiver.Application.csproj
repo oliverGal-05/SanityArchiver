@@ -45,7 +45,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\DirManagerModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\DirManagerService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Models\ReadMe.md" />

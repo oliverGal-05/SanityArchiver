@@ -76,6 +76,7 @@
     <Compile Include="Views\FileAttributeDialog.xaml.cs">
       <DependentUpon>FileAttributeDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="Views\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
