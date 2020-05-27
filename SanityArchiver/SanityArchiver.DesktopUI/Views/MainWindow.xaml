@@ -15,28 +15,25 @@
                     Width="75" Click="ZipSelectedButtonClick"  />
         </DockPanel>
         <TreeView x:Name="TreeView" ItemsSource="{Binding Drives}">
-            <TreeView.ItemTemplate>
-                <HierarchicalDataTemplate ItemsSource="{Binding Directories}">
-                    <TextBlock Text="{Binding Name}" Margin="0,0,5,0"
-                               PreviewMouseLeftButtonUp="TreeView_PreviewMouseLeftButtonUp" />
-                </HierarchicalDataTemplate>
-            </TreeView.ItemTemplate>
-        </TreeView>
-        <DataGrid ItemsSource="{Binding CurrentFiles}" AutoGenerateColumns="False" x:Name="DtgFiles">
-            <DataGrid.Columns>
-                <DataGridTemplateColumn>
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <CheckBox Click="Select"/>
-                            <CheckBox />
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-                <DataGridTextColumn Header="File Name" Binding="{Binding Name}" IsReadOnly="True" />
-                <DataGridTextColumn Header="Date of Creation" Binding="{Binding CreationTime}" IsReadOnly="True" />
-                <DataGridTextColumn Header="File Size" Binding="{Binding Length}" IsReadOnly="True" />
-            </DataGrid.Columns>
-        </DataGrid>
-    </DockPanel>
-
+                <TreeView.ItemTemplate >
+                    <HierarchicalDataTemplate ItemsSource="{Binding Directories}">
+                        <TextBlock Text="{Binding Name}"  Margin="0,0,5,0" PreviewMouseLeftButtonUp="TreeView_PreviewMouseLeftButtonUp"/>
+                    </HierarchicalDataTemplate>
+                </TreeView.ItemTemplate>
+            </TreeView>
+            <DataGrid ItemsSource="{Binding CurrentFiles}"  AutoGenerateColumns="False" x:Name="DtgFiles">
+                <DataGrid.Columns>
+                    <DataGridTemplateColumn>
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <CheckBox Click="Select"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTextColumn Header="File Name" Binding="{Binding Name}" IsReadOnly="True"/>
+                    <DataGridTextColumn Header="Date of Creation" Binding="{Binding CreationTime}" IsReadOnly="True"/>
+                    <DataGridTextColumn Header="File Size" Binding="{Binding Length}" IsReadOnly="True"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </DockPanel>
 </Window>
