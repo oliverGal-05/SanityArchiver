@@ -67,7 +67,7 @@ namespace SanityArchiver.DesktopUI.Views
             var exampleItem = selectedItems[0];
             var selectedItemDir = Path.GetDirectoryName(exampleItem.FullName);
 
-            ZipFiles(selectedItemDir, selectedItems, exampleItem);
+            MainWindowVM.ZipFiles(selectedItemDir, selectedItems, exampleItem);
         }
     }
 }
