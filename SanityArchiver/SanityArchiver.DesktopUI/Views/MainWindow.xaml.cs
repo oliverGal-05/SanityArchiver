@@ -4,6 +4,8 @@ using System;
 using System.Collections.Generic;
 using System.Windows.Controls;
 using System.Windows.Media;
+using System.Data;
+using System.Windows.Input;
 using SanityArchiver.DesktopUI.ViewModels;
 using SanityArchiver.Application.Models;
 
@@ -66,8 +68,15 @@ namespace SanityArchiver.DesktopUI.Views
             var selectedItems = MainWindowVM.SelectedItems;
             var exampleItem = selectedItems[0];
             var selectedItemDir = Path.GetDirectoryName(exampleItem.FullName);
-
             MainWindowVM.ZipFiles(selectedItemDir, selectedItems, exampleItem);
+        }
+
+        private void Row_DoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            DataGrid dg = sender as DataGrid;
+            var selectedFile = (FileInfo)dg.SelectedItem;
+            var attrDialog = new FileAttributeDialog(selectedFile.FullName);
+            attrDialog.Show();
         }
     }
 }
