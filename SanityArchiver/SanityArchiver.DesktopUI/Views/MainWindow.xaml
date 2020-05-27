@@ -20,20 +20,25 @@
                         <TextBlock Text="{Binding Name}"  Margin="0,0,5,0" PreviewMouseLeftButtonUp="TreeView_PreviewMouseLeftButtonUp"/>
                     </HierarchicalDataTemplate>
                 </TreeView.ItemTemplate>
-            </TreeView>
-            <DataGrid ItemsSource="{Binding CurrentFiles}"  AutoGenerateColumns="False" x:Name="DtgFiles">
-                <DataGrid.Columns>
-                    <DataGridTemplateColumn>
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <CheckBox Click="Select"/>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
-                    <DataGridTextColumn Header="File Name" Binding="{Binding Name}" IsReadOnly="True"/>
-                    <DataGridTextColumn Header="Date of Creation" Binding="{Binding CreationTime}" IsReadOnly="True"/>
-                    <DataGridTextColumn Header="File Size" Binding="{Binding Length}" IsReadOnly="True"/>
-                </DataGrid.Columns>
-            </DataGrid>
-        </DockPanel>
+        </TreeView>
+        <DataGrid ItemsSource="{Binding CurrentFiles}" SelectedItem="{Binding Path=CurrentFiles, Mode=OneWay}" AutoGenerateColumns="False" x:Name="DtgFiles">
+        <DataGrid.Resources>
+            <Style TargetType="DataGrid">
+                <EventSetter Event="MouseDoubleClick" Handler="Row_DoubleClick"/>
+            </Style>
+        </DataGrid.Resources>
+        <DataGrid.Columns>
+                <DataGridTemplateColumn>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <CheckBox Click="Select"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn Header="File Name" Binding="{Binding Name}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Date of Creation" Binding="{Binding CreationTime}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="File Size" Binding="{Binding Length}" IsReadOnly="True"/>
+            </DataGrid.Columns>
+        </DataGrid>
+    </DockPanel>
 </Window>
