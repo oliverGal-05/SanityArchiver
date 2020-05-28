@@ -20,6 +20,8 @@ namespace SanityArchiver.DesktopUI.Views
     /// </summary>
     public partial class MainWindow : Window
     {
+        private bool _isFaded;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="MainWindow"/> class.
         /// </summary>
@@ -28,6 +30,7 @@ namespace SanityArchiver.DesktopUI.Views
             InitializeComponent();
             MainWindowVM = new MainWindowViewModel();
             DataContext = MainWindowVM;
+            _isFaded = !MainWindowVM.CaseSens;
         }
 
         /// <summary>
@@ -117,6 +120,14 @@ namespace SanityArchiver.DesktopUI.Views
                     cmd.Execute(param.Text);
                 }
             }
+        }
+
+        private void SwitchCaseSensitive(object sender, RoutedEventArgs e)
+        {
+            MainWindowVM.SwitchCaseSensitiveness();
+            _isFaded = !_isFaded;
+            var img = (Image)imgbutton.Template.FindName("img", imgbutton);
+            img.Opacity = _isFaded ? 0.5 : 1;
         }
     }
 }

@@ -22,6 +22,7 @@ namespace SanityArchiver.DesktopUI.ViewModels
     public class MainWindowViewModel : INotifyPropertyChanged
     {
         private RelayCommand _seachCommand;
+        private string _ucTxtBox;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MainWindowViewModel"/> class.
@@ -59,6 +60,23 @@ namespace SanityArchiver.DesktopUI.ViewModels
         }
 
         /// <summary>
+        ///  Gets or Sets the textbox text.
+        /// </summary>
+        public string UcTxtBox
+        {
+            get
+            {
+                return _ucTxtBox;
+            }
+
+            set
+            {
+                _ucTxtBox = value;
+                NotifyPropertyChanged("UcTxtBox");
+            }
+        }
+
+        /// <summary>
         /// Gets DirInfo of Drives
         /// </summary>
         public ObservableCollection<DirManagerModel> Drives { get; private set; }
@@ -77,6 +95,11 @@ namespace SanityArchiver.DesktopUI.ViewModels
         /// Gets the actually selected, active directory.
         /// </summary>
         public DirManagerModel SelectedDirectory { get; internal set; }
+
+        /// <summary>
+        /// Gets a value indicating whether case sensitiveness is a matter. True = case sensitive.
+        /// </summary>
+        public bool CaseSens { get; private set; } = true;
 
         private DirManagerService DirManagerService { get; set; }
 
@@ -195,6 +218,14 @@ namespace SanityArchiver.DesktopUI.ViewModels
             Directory.Delete(startPath, true);
         }
 
+        /// <summary>
+        /// Switches the bool value of case sensitiveness.
+        /// </summary>
+        public void SwitchCaseSensitiveness()
+        {
+            CaseSens = !CaseSens;
+        }
+
         private bool CanSearch(object parameter)
         {
             if (!string.IsNullOrEmpty((string)parameter) && ((string)parameter).Length > 2)
@@ -207,7 +238,7 @@ namespace SanityArchiver.DesktopUI.ViewModels
 
         private void SearchInput(object parameter)
         {
-            var result = SearchForFiles.SearchFiles(SelectedDirectory.FullName, parameter as string);
+            var result = SearchForFiles.SearchFiles(SelectedDirectory.FullName, parameter as string, CaseSens);
             SearchResult = "Found " + result.Count + " files";
             NotifyPropertyChanged("SearchResult");
 

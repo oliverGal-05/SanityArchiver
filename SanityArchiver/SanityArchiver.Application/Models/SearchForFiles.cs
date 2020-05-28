@@ -19,11 +19,13 @@ namespace SanityArchiver.Application.Models
         /// </summary>
         /// <param name="path">The path of Directory.</param>
         /// <param name="filename">Name of the file</param>
+        /// <param name="caseSensitive">Case sensitive search or not.</param>
         /// <returns>A list of string containing full path of found files.</returns>
-        public static List<string> SearchFiles(string path, string filename)
+        public static List<string> SearchFiles(string path, string filename, bool caseSensitive)
         {
             var result = new List<string>();
-            Regex searchTerm = new Regex(filename);
+            var regexOptions = caseSensitive ? RegexOptions.None : RegexOptions.IgnoreCase;
+            Regex searchTerm = new Regex(filename, regexOptions);
             result = RecursiveSearchFiles(path, searchTerm, result);
             return result;
         }
