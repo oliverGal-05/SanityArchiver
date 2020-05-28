@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.IO;
 using System.Security.AccessControl;
 using System.IO.Compression;
@@ -8,6 +9,8 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Input;
 using SanityArchiver.Application.Models;
 using SanityArchiver.Application.Services;
 
@@ -16,8 +19,10 @@ namespace SanityArchiver.DesktopUI.ViewModels
     /// <summary>
     /// Some glue
     /// </summary>
-    public class MainWindowViewModel
+    public class MainWindowViewModel : INotifyPropertyChanged
     {
+        private RelayCommand _seachCommand;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="MainWindowViewModel"/> class.
         /// </summary>
@@ -27,6 +32,30 @@ namespace SanityArchiver.DesktopUI.ViewModels
             Drives = new ObservableCollection<DirManagerModel>(DirManagerService.GetAllDrives());
             CurrentFiles = new ObservableCollection<FileInfo>(Drives[0].DirInf.GetFiles());
             SelectedItems = new ObservableCollection<FileInfo>();
+        }
+
+        /// <inheritdoc/>
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        /// <summary>
+        /// Gets or Sets the string containing the result of search.
+        /// </summary>
+        public string SearchResult { get; set; }
+
+        /// <summary>
+        /// Gets the command that search for file from user input.
+        /// </summary>
+        public ICommand SearchCommand
+        {
+            get
+            {
+                if (_seachCommand == null)
+                {
+                    _seachCommand = new RelayCommand(SearchInput, CanSearch);
+                }
+
+                return _seachCommand;
+            }
         }
 
         /// <summary>
@@ -43,6 +72,11 @@ namespace SanityArchiver.DesktopUI.ViewModels
         /// Gets files selected
         /// </summary>
         public ObservableCollection<FileInfo> SelectedItems { get; private set; }
+
+        /// <summary>
+        /// Gets the actually selected, active directory.
+        /// </summary>
+        public DirManagerModel SelectedDirectory { get; internal set; }
 
         private DirManagerService DirManagerService { get; set; }
 
@@ -142,6 +176,28 @@ namespace SanityArchiver.DesktopUI.ViewModels
             ZipFile.CreateFromDirectory(startPath, zipPath);
 
             Directory.Delete(startPath, true);
+        }
+
+        private bool CanSearch(object parameter)
+        {
+            if (!string.IsNullOrEmpty((string)parameter) && ((string)parameter).Length > 2)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        private void SearchInput(object parameter)
+        {
+            var result = SearchForFiles.SearchFiles(SelectedDirectory.FullName, parameter as string);
+            SearchResult = "Found " + result.Count + " files";
+            NotifyPropertyChanged("SearchResult");
+        }
+
+        private void NotifyPropertyChanged(string propertyname)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyname));
         }
     }
 }
