@@ -11,6 +11,7 @@ using System.Windows.Input;
 using SanityArchiver.DesktopUI.ViewModels;
 using SanityArchiver.Application.Models;
 using CheckBox = System.Windows.Controls.CheckBox;
+using DataGrid = System.Windows.Controls.DataGrid;
 
 namespace SanityArchiver.DesktopUI.Views
 {
@@ -93,13 +94,14 @@ namespace SanityArchiver.DesktopUI.Views
             var selectedItem = MainWindowVM.SelectedItems[0];
 
             MainWindowViewModel.Decrypt(selectedItem.FullName);
+        }
 
         private void Row_DoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            DataGrid dg = sender as DataGrid;
-            var selectedFile = (FileInfo)dg.SelectedItem;
-            var attrDialog = new FileAttributeDialog(selectedFile.FullName);
-            attrDialog.Show();
+            {
+                DataGrid dg = sender as DataGrid;
+                var selectedFile = (FileInfo)dg.SelectedItem;
+                var attrDialog = new FileAttributeDialog(selectedFile.FullName);
+                attrDialog.Show();
+            }
         }
-    }
 }
