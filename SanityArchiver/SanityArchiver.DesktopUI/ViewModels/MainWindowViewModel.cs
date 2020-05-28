@@ -157,6 +157,23 @@ namespace SanityArchiver.DesktopUI.ViewModels
             {
                 CurrentFiles.Add(item);
             }
+
+            // clear the result label in the view.
+            SearchResult = "Current directory: " + currentDirModel.FullName;
+            NotifyPropertyChanged("SearchResult");
+        }
+
+        /// <summary>
+        /// Refresh to current files.
+        /// </summary>
+        /// <param name="files">List containing fullName (the path) of files.</param>
+        public void DisplayCurrentFiles(List<string> files)
+        {
+            CurrentFiles.Clear();
+            foreach (var file in files)
+            {
+                CurrentFiles.Add(new FileInfo(file));
+            }
         }
 
         /// <summary>
@@ -222,6 +239,8 @@ namespace SanityArchiver.DesktopUI.ViewModels
             var result = SearchForFiles.SearchFiles(SelectedDirectory.FullName, parameter as string);
             SearchResult = "Found " + result.Count + " files";
             NotifyPropertyChanged("SearchResult");
+
+            DisplayCurrentFiles(result);
         }
 
         private void NotifyPropertyChanged(string propertyname)
