@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace SanityArchiver.Application.Models
@@ -22,22 +23,31 @@ namespace SanityArchiver.Application.Models
         public static List<string> SearchFiles(string path, string filename)
         {
             var result = new List<string>();
-            result = RecursiveSearchFiles(path, filename, result);
+            Regex searchTerm = new Regex(filename);
+            result = RecursiveSearchFiles(path, searchTerm, result);
             return result;
         }
 
-        private static List<string> RecursiveSearchFiles(string path, string filename, List<string> files)
+        private static List<string> RecursiveSearchFiles(string path, Regex searchTerm, List<string> files)
         {
             try
             {
-                Directory.GetFiles(path)
-                    .Where(f => filename.ToLower().Equals(Path.GetFileName(f).ToLower()))
-                    .ToList()
-                    .ForEach(f => files.Add(f));
+                var fileList = Directory.GetFiles(path);
+                var queryMatchingFiles =
+                    from file in fileList
+                    let fileText = Path.GetFileNameWithoutExtension(file)
+                    let matches = searchTerm.Matches(fileText)
+                    where matches.Count > 0
+                    select file;
+
+                foreach (var file in queryMatchingFiles)
+                {
+                    files.Add(file);
+                }
 
                 Directory.GetDirectories(path)
                     .ToList()
-                    .ForEach(s => RecursiveSearchFiles(s, filename, files));
+                    .ForEach(s => RecursiveSearchFiles(s, searchTerm, files));
             }
             catch (UnauthorizedAccessException)
             {
