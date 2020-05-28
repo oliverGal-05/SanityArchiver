@@ -76,11 +76,10 @@ namespace SanityArchiver.DesktopUI.Views
         private void EncryptSelectedButtonClick(object sender, RoutedEventArgs e)
         {
             var selectedItem = MainWindowVM.SelectedItems[0];
-            var selectedItemDir = Path.GetDirectoryName(selectedItem.FullName);
 
             if (selectedItem.Name.EndsWith(".txt"))
             {
-                MainWindowViewModel.EncryptTxt(selectedItemDir, selectedItem.FullName);
+                MainWindowViewModel.EncryptTxt(selectedItem.FullName);
             }
             else
             {
@@ -91,9 +90,8 @@ namespace SanityArchiver.DesktopUI.Views
         private void DecryptSelectedButtonClick(object sender, RoutedEventArgs e)
         {
             var selectedItem = MainWindowVM.SelectedItems[0];
-            var selectedItemDir = Path.GetDirectoryName(selectedItem.FullName);
 
-            MainWindowViewModel.Decrypt(selectedItemDir, selectedItem.FullName);
+            MainWindowViewModel.Decrypt(selectedItem.FullName);
         }
     }
 }

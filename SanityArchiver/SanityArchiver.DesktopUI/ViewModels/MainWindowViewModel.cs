@@ -49,11 +49,10 @@ namespace SanityArchiver.DesktopUI.ViewModels
         /// <summary>
         /// Encrypts the selected item
         /// </summary>
-        /// <param name="selectedItemFulName">The full path of the item to be encrypted</param>
-        /// <param name="destination">The full path of the destination of the encryption</param>
-        public static void EncryptTxt(string selectedItemFulName, string destination)
+        /// <param name="path">The full path of the destination of the encryption</param>
+        public static void EncryptTxt(string path)
         {
-            string filePath = destination;
+            string filePath = path;
             string key = "youtubee";
 
             byte[] plainContent = File.ReadAllBytes(filePath);
@@ -79,11 +78,31 @@ namespace SanityArchiver.DesktopUI.ViewModels
         /// <summary>
         /// Decrypts an .enc file
         /// </summary>
-        /// <param name="selectedItemDir">a</param>
-        /// <param name="selectedItemFullName">b</param>
+        /// <param name="path">Full path of the selected item</param>
         /// <exception cref="NotImplementedException">c</exception>
-        public static void Decrypt(string selectedItemDir, string selectedItemFullName)
+        public static void Decrypt(string path)
         {
+            string filePath = path;
+            string key = "youtubee";
+
+            byte[] encrypted = File.ReadAllBytes(filePath);
+            using (var des = new DESCryptoServiceProvider())
+            {
+                des.IV = Encoding.UTF8.GetBytes(key);
+                des.Key = Encoding.UTF8.GetBytes(key);
+                des.Mode = CipherMode.CBC;
+                des.Padding = PaddingMode.PKCS7;
+
+                using (var memStream = new MemoryStream())
+                {
+                    CryptoStream cryptoStream = new CryptoStream(memStream, des.CreateDecryptor(), CryptoStreamMode.Write);
+
+                    cryptoStream.Write(encrypted, 0, encrypted.Length);
+                    cryptoStream.FlushFinalBlock();
+                    File.WriteAllBytes(filePath, memStream.ToArray());
+                    Console.WriteLine("Decrypted successfully " + filePath);
+                }
+            }
         }
 
         /// <summary>
