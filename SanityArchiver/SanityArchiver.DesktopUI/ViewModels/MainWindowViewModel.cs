@@ -152,6 +152,10 @@ namespace SanityArchiver.DesktopUI.ViewModels
             {
                 CurrentFiles.Add(item);
             }
+
+            // clear the result label in the view.
+            SearchResult = null;
+            NotifyPropertyChanged("SearchResult");
         }
 
         /// <summary>
