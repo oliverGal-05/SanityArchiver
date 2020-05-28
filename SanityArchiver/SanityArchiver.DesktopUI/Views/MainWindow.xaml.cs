@@ -6,6 +6,7 @@ using System.Windows.Media;
 using System.Windows.Input;
 using SanityArchiver.DesktopUI.ViewModels;
 using SanityArchiver.Application.Models;
+using ToolTip = System.Windows.Controls.ToolTip;
 using CheckBox = System.Windows.Controls.CheckBox;
 using DataGrid = System.Windows.Controls.DataGrid;
 
@@ -143,14 +144,7 @@ namespace SanityArchiver.DesktopUI.Views
 
         private void ShowSize(object sender, RoutedEventArgs e)
         {
-            long sizeInLong = MainWindowVM.SelectedDirectory.GetSize();
-            string sizeResult = MainWindowVM.SelectedDirectory.GetSizeInString(sizeInLong);
-            System.Console.WriteLine(sizeResult);
-            string messageBoxText = $"This directory's size is: {sizeResult}";
-            string caption = "FileSize";
-            MessageBoxButton button = MessageBoxButton.OK;
-            MessageBoxImage icon = MessageBoxImage.Information;
-            System.Windows.MessageBox.Show(messageBoxText, caption, button, icon);
+            MainWindowVM.ShowSize();
         }
     }
 }
