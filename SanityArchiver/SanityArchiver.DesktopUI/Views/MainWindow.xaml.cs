@@ -2,12 +2,15 @@
 using System.IO;
 using System;
 using System.Collections.Generic;
+using System.Text;
+using System.Windows.Forms;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Data;
 using System.Windows.Input;
 using SanityArchiver.DesktopUI.ViewModels;
 using SanityArchiver.Application.Models;
+using CheckBox = System.Windows.Controls.CheckBox;
 
 namespace SanityArchiver.DesktopUI.Views
 {
@@ -70,6 +73,26 @@ namespace SanityArchiver.DesktopUI.Views
             var selectedItemDir = Path.GetDirectoryName(exampleItem.FullName);
             MainWindowVM.ZipFiles(selectedItemDir, selectedItems, exampleItem);
         }
+
+        private void EncryptSelectedButtonClick(object sender, RoutedEventArgs e)
+        {
+            var selectedItem = MainWindowVM.SelectedItems[0];
+
+            if (selectedItem.Name.EndsWith(".txt"))
+            {
+                MainWindowViewModel.EncryptTxt(selectedItem.FullName);
+            }
+            else
+            {
+                System.Windows.Forms.MessageBox.Show("Only .txt files can be encrypted");
+            }
+        }
+
+        private void DecryptSelectedButtonClick(object sender, RoutedEventArgs e)
+        {
+            var selectedItem = MainWindowVM.SelectedItems[0];
+
+            MainWindowViewModel.Decrypt(selectedItem.FullName);
 
         private void Row_DoubleClick(object sender, MouseButtonEventArgs e)
         {
