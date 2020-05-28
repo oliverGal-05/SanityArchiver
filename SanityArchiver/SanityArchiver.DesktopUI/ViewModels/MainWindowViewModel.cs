@@ -71,6 +71,11 @@ namespace SanityArchiver.DesktopUI.ViewModels
         /// </summary>
         public ObservableCollection<FileInfo> SelectedItems { get; private set; }
 
+        /// <summary>
+        /// Gets the actually selected, active directory.
+        /// </summary>
+        public DirManagerModel SelectedDirectory { get; internal set; }
+
         private DirManagerService DirManagerService { get; set; }
 
         /// <summary>
@@ -124,10 +129,8 @@ namespace SanityArchiver.DesktopUI.ViewModels
 
         private void SearchInput(object parameter)
         {
-            // implement searching functions here.
-
-            // TODO: set the result string to the actual result. This is just a placeholder.
-            SearchResult = "searching for " + parameter as string;
+            var result = SearchForFiles.SearchFiles(SelectedDirectory.FullName, parameter as string);
+            SearchResult = "Found " + result.Count + " files";
             NotifyPropertyChanged("SearchResult");
         }
 

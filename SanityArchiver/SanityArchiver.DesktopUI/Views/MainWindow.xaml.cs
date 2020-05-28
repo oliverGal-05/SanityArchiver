@@ -42,6 +42,7 @@ namespace SanityArchiver.DesktopUI.Views
             if ((DependencyObject)e.OriginalSource is TextBlock)
             {
                 MainWindowVM.DisplayCurrentFiles((DirManagerModel)((TreeViewItem)depObj).Header);
+                MainWindowVM.SelectedDirectory = (DirManagerModel)((TreeViewItem)depObj).Header;
             }
         }
 
