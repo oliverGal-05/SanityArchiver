@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
+using System.Security.AccessControl;
 using System.IO.Compression;
 using System.Linq;
 using System.Security.Cryptography;
@@ -52,7 +53,27 @@ namespace SanityArchiver.DesktopUI.ViewModels
         /// <param name="destination">The full path of the destination of the encryption</param>
         public static void EncryptTxt(string selectedItemFulName, string destination)
         {
-            throw new NotImplementedException();
+            string filePath = destination;
+            string key = "youtubee";
+
+            byte[] plainContent = File.ReadAllBytes(filePath);
+            using (var des = new DESCryptoServiceProvider())
+            {
+                des.IV = Encoding.UTF8.GetBytes(key);
+                des.Key = Encoding.UTF8.GetBytes(key);
+                des.Mode = CipherMode.CBC;
+                des.Padding = PaddingMode.PKCS7;
+
+                using (var memStream = new MemoryStream())
+                {
+                    CryptoStream cryptoStream = new CryptoStream(memStream, des.CreateEncryptor(), CryptoStreamMode.Write);
+
+                    cryptoStream.Write(plainContent, 0, plainContent.Length);
+                    cryptoStream.FlushFinalBlock();
+                    File.WriteAllBytes(filePath, memStream.ToArray());
+                    Console.WriteLine("Encrypted successfully " + filePath);
+                }
+            }
         }
 
         /// <summary>
@@ -63,7 +84,6 @@ namespace SanityArchiver.DesktopUI.ViewModels
         /// <exception cref="NotImplementedException">c</exception>
         public static void Decrypt(string selectedItemDir, string selectedItemFullName)
         {
-            throw new NotImplementedException();
         }
 
         /// <summary>
