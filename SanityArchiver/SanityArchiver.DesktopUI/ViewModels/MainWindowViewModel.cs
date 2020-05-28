@@ -29,7 +29,7 @@ namespace SanityArchiver.DesktopUI.ViewModels
         /// <summary>
         /// Gets or sets the path
         /// </summary>
-        public string Path { get; set; }
+        public DirManagerModel SelectedDirectory { get; set; }
 
         /// <summary>
         /// Gets or sets selected action
@@ -69,11 +69,10 @@ namespace SanityArchiver.DesktopUI.ViewModels
         /// <summary>
         /// Copy selected files
         /// </summary>
-        /// <param name="filesToCopy">selected items</param>
-        public void CopyFiles(ObservableCollection<FileInfo> filesToCopy)
+        public void CopyFiles()
         {
-            string toPathOrig = Path + @"\";
-            foreach (var item in filesToCopy)
+            string toPathOrig = SelectedDirectory.FullName + @"\";
+            foreach (var item in SelectedItems)
             {
                 string name = item.Name;
                 string toDestinPath = toPathOrig + name;
@@ -88,7 +87,7 @@ namespace SanityArchiver.DesktopUI.ViewModels
             }
 
             Copy_Move = string.Empty;
-            filesToCopy.Clear();
+            SelectedItems.Clear();
         }
     }
 }

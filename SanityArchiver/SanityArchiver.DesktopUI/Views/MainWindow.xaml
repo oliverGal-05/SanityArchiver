@@ -17,6 +17,7 @@
             <TreeView.ContextMenu>
                 <ContextMenu>
                     <MenuItem Header="Paste" Click="PasteFiles"/>
+                    <MenuItem Header="Size" Click="ShowSize"/>
                 </ContextMenu>
             </TreeView.ContextMenu>
         </TreeView>

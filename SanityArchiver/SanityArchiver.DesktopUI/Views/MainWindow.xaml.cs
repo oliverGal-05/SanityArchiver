@@ -78,12 +78,19 @@ namespace SanityArchiver.DesktopUI.Views
                 depObj = VisualTreeHelper.GetParent(depObj);
             }
 
-            MainWindowVM.Path = ((DirManagerModel)((TreeViewItem)depObj).Header).FullName;
+            MainWindowVM.SelectedDirectory = (DirManagerModel)((TreeViewItem)depObj).Header;
         }
 
         private void PasteFiles(object sender, RoutedEventArgs e)
         {
-            MainWindowVM.CopyFiles(MainWindowVM.SelectedItems);
+            MainWindowVM.CopyFiles();
+        }
+
+        private void ShowSize(object sender, RoutedEventArgs e)
+        {
+            long sizeInLong = MainWindowVM.SelectedDirectory.GetSize();
+            string sizeResult = MainWindowVM.SelectedDirectory.GetSizeInString(sizeInLong);
+            System.Console.WriteLine(sizeResult);
         }
     }
 }
