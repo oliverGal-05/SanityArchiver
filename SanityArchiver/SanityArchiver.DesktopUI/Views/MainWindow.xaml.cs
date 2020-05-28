@@ -90,7 +90,11 @@ namespace SanityArchiver.DesktopUI.Views
         {
             long sizeInLong = MainWindowVM.SelectedDirectory.GetSize();
             string sizeResult = MainWindowVM.SelectedDirectory.GetSizeInString(sizeInLong);
-            System.Console.WriteLine(sizeResult);
+            string messageBoxText = $"This directory's size is: {sizeResult}";
+            string caption = "FileSize";
+            MessageBoxButton button = MessageBoxButton.OK;
+            MessageBoxImage icon = MessageBoxImage.Information;
+            MessageBox.Show(messageBoxText, caption, button, icon);
         }
     }
 }
