@@ -154,7 +154,7 @@ namespace SanityArchiver.DesktopUI.ViewModels
             }
 
             // clear the result label in the view.
-            SearchResult = null;
+            SearchResult = "Current directory: " + currentDirModel.FullName;
             NotifyPropertyChanged("SearchResult");
         }
 
