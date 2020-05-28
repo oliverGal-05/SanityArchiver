@@ -112,6 +112,8 @@ namespace SanityArchiver.DesktopUI.ViewModels
         public void DisplayCurrentFiles(DirManagerModel currentDirModel)
         {
             CurrentFiles.Clear();
+
+            // TODO unauthorized access
             foreach (var item in currentDirModel.DirInf.GetFiles())
             {
                 CurrentFiles.Add(item);

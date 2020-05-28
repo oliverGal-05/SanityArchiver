@@ -6,6 +6,8 @@ using System.Text;
 using System.Windows.Forms;
 using System.Windows.Controls;
 using System.Windows.Media;
+using System.Data;
+using System.Windows.Input;
 using SanityArchiver.DesktopUI.ViewModels;
 using SanityArchiver.Application.Models;
 using CheckBox = System.Windows.Controls.CheckBox;
@@ -69,7 +71,6 @@ namespace SanityArchiver.DesktopUI.Views
             var selectedItems = MainWindowVM.SelectedItems;
             var exampleItem = selectedItems[0];
             var selectedItemDir = Path.GetDirectoryName(exampleItem.FullName);
-
             MainWindowVM.ZipFiles(selectedItemDir, selectedItems, exampleItem);
         }
 
@@ -92,6 +93,13 @@ namespace SanityArchiver.DesktopUI.Views
             var selectedItem = MainWindowVM.SelectedItems[0];
 
             MainWindowViewModel.Decrypt(selectedItem.FullName);
+
+        private void Row_DoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            DataGrid dg = sender as DataGrid;
+            var selectedFile = (FileInfo)dg.SelectedItem;
+            var attrDialog = new FileAttributeDialog(selectedFile.FullName);
+            attrDialog.Show();
         }
     }
 }
