@@ -1,15 +1,10 @@
-﻿using System.Windows;
-using System.IO;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Windows.Forms;
+﻿using System.IO;
+using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media;
-using System.Data;
 using System.Windows.Input;
-using SanityArchiver.DesktopUI.ViewModels;
+using System.Windows.Media;
 using SanityArchiver.Application.Models;
+using SanityArchiver.DesktopUI.ViewModels;
 using CheckBox = System.Windows.Controls.CheckBox;
 using DataGrid = System.Windows.Controls.DataGrid;
 
@@ -120,6 +115,44 @@ namespace SanityArchiver.DesktopUI.Views
                     cmd.Execute(param.Text);
                 }
             }
+        }
+
+        private void Copy_Clicked(object sender, RoutedEventArgs e)
+        {
+            MainWindowVM.Copy_Move = "Copy";
+        }
+
+        private void Move_Clicked(object sender, RoutedEventArgs e)
+        {
+            MainWindowVM.Copy_Move = "Move";
+        }
+
+        private void TextBlock_PreviewMouseRightButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            var depObj = (DependencyObject)e.OriginalSource;
+            while ((depObj != null) && !(depObj.GetType().Name is "TreeViewItem"))
+            {
+                depObj = VisualTreeHelper.GetParent(depObj);
+            }
+
+            MainWindowVM.SelectedDirectory = (DirManagerModel)((TreeViewItem)depObj).Header;
+        }
+
+        private void PasteFiles(object sender, RoutedEventArgs e)
+        {
+            MainWindowVM.CopyFiles();
+        }
+
+        private void ShowSize(object sender, RoutedEventArgs e)
+        {
+            long sizeInLong = MainWindowVM.SelectedDirectory.GetSize();
+            string sizeResult = MainWindowVM.SelectedDirectory.GetSizeInString(sizeInLong);
+            System.Console.WriteLine(sizeResult);
+            string messageBoxText = $"This directory's size is: {sizeResult}";
+            string caption = "FileSize";
+            MessageBoxButton button = MessageBoxButton.OK;
+            MessageBoxImage icon = MessageBoxImage.Information;
+            System.Windows.MessageBox.Show(messageBoxText, caption, button, icon);
         }
 
         private void SwitchCaseSensitive(object sender, RoutedEventArgs e)

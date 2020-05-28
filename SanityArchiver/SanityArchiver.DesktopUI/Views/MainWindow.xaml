@@ -3,7 +3,6 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:SanityArchiver.DesktopUI"
         xmlns:uc="clr-namespace:SanityArchiver.DesktopUI"
         mc:Ignorable="d"
         Title="Sanity Archiver" Height="450" Width="800">
@@ -38,9 +37,16 @@
         <TreeView x:Name="TreeView" ItemsSource="{Binding Drives}">
             <TreeView.ItemTemplate >
                 <HierarchicalDataTemplate ItemsSource="{Binding Directories}">
-                    <TextBlock Text="{Binding Name}"  Margin="0,0,5,0" PreviewMouseLeftButtonUp="TreeView_PreviewMouseLeftButtonUp"/>
+                    <TextBlock Text="{Binding Name}"  Margin="0,0,5,0" PreviewMouseLeftButtonUp="TreeView_PreviewMouseLeftButtonUp"
+                               PreviewMouseRightButtonUp="TextBlock_PreviewMouseRightButtonUp"/>
                 </HierarchicalDataTemplate>
             </TreeView.ItemTemplate>
+            <TreeView.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Paste" Click="PasteFiles"/>
+                    <MenuItem Header="Size" Click="ShowSize"/>
+                </ContextMenu>
+            </TreeView.ContextMenu>
         </TreeView>
         <DataGrid ItemsSource="{Binding CurrentFiles}" SelectedItem="{Binding Path=CurrentFiles, Mode=OneWay}" AutoGenerateColumns="False" x:Name="DtgFiles" Height="368" VerticalAlignment="Bottom">
             <DataGrid.Resources>
@@ -60,6 +66,12 @@
                 <DataGridTextColumn Header="Date of Creation" Binding="{Binding CreationTime}" IsReadOnly="True"/>
                 <DataGridTextColumn Header="File Size" Binding="{Binding Length}" IsReadOnly="True"/>
             </DataGrid.Columns>
+            <DataGrid.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Copy file(s)" Click="Copy_Clicked"/>
+                    <MenuItem Header="Move file(s)" Click="Move_Clicked"/>
+                </ContextMenu>
+            </DataGrid.ContextMenu>
         </DataGrid>
     </DockPanel>
 </Window>

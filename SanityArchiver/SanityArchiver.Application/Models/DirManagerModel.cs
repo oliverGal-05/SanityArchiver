@@ -46,7 +46,17 @@ namespace SanityArchiver.Application.Models
                     {
                         foreach (var item in DirInf.GetDirectories())
                         {
-                            directoryInfos.Add(new DirManagerModel(item.FullName));
+                            try
+                            {
+                                DirManagerModel currentDirectory = new DirManagerModel(item.FullName);
+                                if (currentDirectory.DirInf.Exists)
+                                {
+                                    directoryInfos.Add(new DirManagerModel(item.FullName));
+                                }
+                            }
+                            catch (UnauthorizedAccessException)
+                            {
+                            }
                         }
                     }
                     catch (UnauthorizedAccessException)
@@ -63,5 +73,74 @@ namespace SanityArchiver.Application.Models
         /// Gets or sets dirInf
         /// </summary>
         public DirectoryInfo DirInf { get; set; }
+
+        /// <summary>
+        /// niceone
+        /// </summary>
+        /// <returns>Size of the files and folders in current folder</returns>
+        public long GetSize()
+        {
+            long size = 0;
+            try
+            {
+                FileInfo[] fis = DirInf.GetFiles();
+                foreach (FileInfo fi in fis)
+                {
+                    size += fi.Length;
+                }
+            }
+            catch (UnauthorizedAccessException)
+            {
+            }
+
+            try
+            {
+                foreach (var di in Directories)
+                {
+                    size += di.GetSize();
+                }
+            }
+            catch (UnauthorizedAccessException)
+            {
+            }
+
+            return size;
+        }
+
+        /// <summary>
+        /// Calculat the folder's size in int
+        /// </summary>
+        /// <param name="actualSize">size of folder in KB</param>
+        /// <returns>string holding size with proper unit</returns>
+        public string GetSizeInString(long actualSize)
+        {
+            int sizeInInt = 0;
+            int dividerKB = 1024;
+            int dividerMB = dividerKB * dividerKB;
+            int dividerGB = dividerMB * dividerKB;
+
+            string result = " ";
+            if (actualSize > dividerGB)
+            {
+                sizeInInt = (int)(actualSize / dividerGB);
+                result = sizeInInt.ToString() + " GB";
+            }
+            else if (actualSize > dividerMB)
+            {
+                sizeInInt = (int)(actualSize / dividerMB);
+                result = sizeInInt.ToString() + " MB";
+            }
+            else if (actualSize > dividerKB)
+            {
+                sizeInInt = (int)(actualSize / dividerKB);
+                result = sizeInInt.ToString() + " KB";
+            }
+            else
+            {
+                result = actualSize.ToString() + " byte";
+            }
+
+            return result;
+        }
     }
 }

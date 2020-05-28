@@ -22,7 +22,6 @@ namespace SanityArchiver.DesktopUI.ViewModels
     public class MainWindowViewModel : INotifyPropertyChanged
     {
         private RelayCommand _seachCommand;
-        private string _ucTxtBox;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MainWindowViewModel"/> class.
@@ -60,21 +59,9 @@ namespace SanityArchiver.DesktopUI.ViewModels
         }
 
         /// <summary>
-        ///  Gets or Sets the textbox text.
+        /// Gets or sets selected action
         /// </summary>
-        public string UcTxtBox
-        {
-            get
-            {
-                return _ucTxtBox;
-            }
-
-            set
-            {
-                _ucTxtBox = value;
-                NotifyPropertyChanged("UcTxtBox");
-            }
-        }
+        public string Copy_Move { get; set; }
 
         /// <summary>
         /// Gets DirInfo of Drives
@@ -224,6 +211,30 @@ namespace SanityArchiver.DesktopUI.ViewModels
         public void SwitchCaseSensitiveness()
         {
             CaseSens = !CaseSens;
+        }
+
+        /// <summary>
+        /// Copy selected files
+        /// </summary>
+        public void CopyFiles()
+        {
+            string toPathOrig = SelectedDirectory.FullName + @"\";
+            foreach (var item in SelectedItems)
+            {
+                string name = item.Name;
+                string toDestinPath = toPathOrig + name;
+                if (Copy_Move == "Copy")
+                {
+                    item.CopyTo(toDestinPath);
+                }
+                else if (Copy_Move == "Move")
+                {
+                    item.MoveTo(toDestinPath);
+                }
+            }
+
+            Copy_Move = string.Empty;
+            SelectedItems.Clear();
         }
 
         private bool CanSearch(object parameter)
