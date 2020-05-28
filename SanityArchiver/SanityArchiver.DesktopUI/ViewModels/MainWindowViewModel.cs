@@ -59,11 +59,6 @@ namespace SanityArchiver.DesktopUI.ViewModels
         }
 
         /// <summary>
-        /// Gets or sets the path
-        /// </summary>
-        public DirManagerModel SelectedDirectory { get; set; }
-
-        /// <summary>
         /// Gets or sets selected action
         /// </summary>
         public string Copy_Move { get; set; }
@@ -188,28 +183,6 @@ namespace SanityArchiver.DesktopUI.ViewModels
             Directory.Delete(startPath, true);
         }
 
-        private bool CanSearch(object parameter)
-        {
-            if (!string.IsNullOrEmpty((string)parameter) && ((string)parameter).Length > 2)
-            {
-                return true;
-            }
-
-            return false;
-        }
-
-        private void SearchInput(object parameter)
-        {
-            var result = SearchForFiles.SearchFiles(SelectedDirectory.FullName, parameter as string);
-            SearchResult = "Found " + result.Count + " files";
-            NotifyPropertyChanged("SearchResult");
-        }
-
-        private void NotifyPropertyChanged(string propertyname)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyname));
-        }
-
         /// <summary>
         /// Copy selected files
         /// </summary>
@@ -232,6 +205,28 @@ namespace SanityArchiver.DesktopUI.ViewModels
 
             Copy_Move = string.Empty;
             SelectedItems.Clear();
+        }
+
+        private bool CanSearch(object parameter)
+        {
+            if (!string.IsNullOrEmpty((string)parameter) && ((string)parameter).Length > 2)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        private void SearchInput(object parameter)
+        {
+            var result = SearchForFiles.SearchFiles(SelectedDirectory.FullName, parameter as string);
+            SearchResult = "Found " + result.Count + " files";
+            NotifyPropertyChanged("SearchResult");
+        }
+
+        private void NotifyPropertyChanged(string propertyname)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyname));
         }
     }
 }
