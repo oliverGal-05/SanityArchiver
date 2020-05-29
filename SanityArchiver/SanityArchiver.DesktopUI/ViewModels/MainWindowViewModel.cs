@@ -237,6 +237,17 @@ namespace SanityArchiver.DesktopUI.ViewModels
             SelectedItems.Clear();
         }
 
+        /// <summary>
+        /// Shows selected folder's size
+        /// </summary>
+        internal void ShowSize()
+        {
+            long sizeInLong = SelectedDirectory.GetSize();
+            string sizeResult = SelectedDirectory.GetSizeInString(sizeInLong);
+            SearchResult = "Size:" + sizeResult;
+            NotifyPropertyChanged("SearchResult");
+        }
+
         private bool CanSearch(object parameter)
         {
             if (!string.IsNullOrEmpty((string)parameter) && ((string)parameter).Length > 2)
