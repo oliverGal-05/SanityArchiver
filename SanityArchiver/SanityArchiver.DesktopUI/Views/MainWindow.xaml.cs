@@ -4,7 +4,6 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using SanityArchiver.Application.Models;
-using ToolTip = System.Windows.Controls.ToolTip;
 using SanityArchiver.DesktopUI.ViewModels;
 using CheckBox = System.Windows.Controls.CheckBox;
 using DataGrid = System.Windows.Controls.DataGrid;
@@ -73,6 +72,7 @@ namespace SanityArchiver.DesktopUI.Views
             var exampleItem = selectedItems[0];
             var selectedItemDir = System.IO.Path.GetDirectoryName(exampleItem.FullName);
             MainWindowVM.ZipFiles(selectedItemDir, selectedItems, exampleItem);
+            MainWindowVM.DisplayCurrentFiles(MainWindowVM.SelectedDirectory);
         }
 
         private void EncryptSelectedButtonClick(object sender, RoutedEventArgs e)
@@ -82,6 +82,7 @@ namespace SanityArchiver.DesktopUI.Views
             if (selectedItem.Name.EndsWith(".txt"))
             {
                 MainWindowViewModel.EncryptTxt(selectedItem.FullName);
+                MainWindowVM.DisplayCurrentFiles(MainWindowVM.SelectedDirectory);
             }
             else
             {
@@ -94,6 +95,7 @@ namespace SanityArchiver.DesktopUI.Views
             var selectedItem = MainWindowVM.SelectedItems[0];
 
             MainWindowViewModel.Decrypt(selectedItem.FullName);
+            MainWindowVM.DisplayCurrentFiles(MainWindowVM.SelectedDirectory);
         }
 
         private void Row_DoubleClick(object sender, MouseButtonEventArgs e)
@@ -102,6 +104,7 @@ namespace SanityArchiver.DesktopUI.Views
             var selectedFile = (FileInfo)dg.SelectedItem;
             var attrDialog = new FileAttributeDialog(selectedFile.FullName);
             attrDialog.Show();
+            MainWindowVM.DisplayCurrentFiles(MainWindowVM.SelectedDirectory);
         }
 
         private void OnKeyDownHandler(object sender, System.Windows.Input.KeyEventArgs e)
@@ -142,6 +145,7 @@ namespace SanityArchiver.DesktopUI.Views
         private void PasteFiles(object sender, RoutedEventArgs e)
         {
             MainWindowVM.CopyFiles();
+            MainWindowVM.DisplayCurrentFiles(MainWindowVM.SelectedDirectory);
         }
 
         private void ShowSize(object sender, RoutedEventArgs e)
